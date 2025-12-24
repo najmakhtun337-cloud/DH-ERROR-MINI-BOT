@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>DH ERROR PAIR CODE</title>
+  <style>
+    body {
+      background:#0f172a;
+      color:white;
+      font-family:sans-serif;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      height:100vh;
+    }
+    .box {
+      background:#020617;
+      padding:30px;
+      border-radius:15px;
+      width:300px;
+      text-align:center;
+    }
+    input, button {
+      width:100%;
+      padding:10px;
+      margin-top:10px;
+      border-radius:8px;
+      border:none;
+    }
+    button {
+      background:#7c3aed;
+      color:white;
+      font-weight:bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h2>PAIR CODE</h2>
+    <p>Link with phone number</p>
+    <input id="num" placeholder="+91XXXXXXXXXX">
+    <button onclick="getCode()">ENTER</button>
+    <p id="out"></p>
+  </div>
+
+<script>
+async function getCode(){
+  const n = document.getElementById("num").value;
+  const r = await fetch("/pair",{
+    method:"POST",
+    headers:{ "Content-Type":"application/json" },
+    body:JSON.stringify({number:n})
+  });
+  const d = await r.json();
+  document.getElementById("out").innerText =
+    d.code ? "CODE: "+d.code : "ERROR";
+}
+</script>
+</body>
+</html>
